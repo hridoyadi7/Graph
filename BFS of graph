@@ -1,0 +1,29 @@
+https://practice.geeksforgeeks.org/problems/bfs-traversal-of-graph/1/?category[]=Graph&category[]=Graph&page=1&query=category[]Graphpage1category[]Graph
+
+    void BFSReq(vector<int> adj[],int n,int source,bool istrav[],vector<int>&v)
+    {
+        queue<int>q;
+        q.push(source);
+        istrav[source]=true;
+        while(!q.empty())
+        {
+            int curr=q.front();
+            q.pop();
+            v.push_back(curr);
+            for(int i=0;i<adj[curr].size();i++){
+                if(istrav[adj[curr][i]]==false){
+                    q.push(adj[curr][i]);
+                    istrav[adj[curr][i]]=true;
+                }
+            }
+        }
+    }
+	vector<int>bfsOfGraph(int v, vector<int> adj[]){
+	    // Code here
+	    bool istrav[v];
+	    vector<int>vec;
+	    for(int i=0;i<v;i++)
+	        istrav[i]=false;
+	    BFSReq(adj,v,0,istrav,vec);
+	    return vec;
+	}
