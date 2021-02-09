@@ -1,0 +1,41 @@
+https://practice.geeksforgeeks.org/problems/prerequisite-tasks/1/?category[]=Graph&category[]=Graph&page=1&query=category[]Graphpage1category[]Graph
+    bool isCyclicRec(vector<vector<int>>v,int n,int s,bool visited[],bool check[])
+    {
+        visited[s]=true;
+        check[s]=true;
+        for(int u:v[s])
+        {
+            if(visited[u]==false)
+            {
+                if(isCyclicRec(v,n,u,visited,check))
+                    return true;
+            }
+            else{
+                if(check[u]==true)
+                    return true;
+            }
+        }
+        check[s]=false;
+        return false;
+    }
+    bool isCyclic(vector<vector<int>>v,int n)
+    {
+        bool visited[n],check[n];
+        for(int i=0;i<n;i++)
+        {
+            visited[i]=false;
+            check[i]=false;
+        }
+        for(int i=0;i<n;i++)
+            if(visited[i]==false)
+                if(isCyclicRec(v,n,i,visited,check))
+                    return true;
+        return false;
+    }
+	bool isPossible(int N, vector<pair<int, int> >& prerequisites) {
+	    // Code here
+	    vector<vector<int>>v(N);
+	    for(int i=0;i<prerequisites.size();i++)
+	        v[prerequisites[i].second].push_back(prerequisites[i].first);
+	    return !(isCyclic(v,N));
+	}
