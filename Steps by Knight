@@ -1,0 +1,73 @@
+https://practice.geeksforgeeks.org/problems/steps-by-knight5927/1/?category[]=Graph&category[]=Graph&page=2&query=category[]Graphpage2category[]Graph
+
+    bool isValidMove(int i,int j,int n)
+    {
+        return (i>=1 && i<=n && j>=1 && j<=n);
+    }
+	int minStepToReachTarget(vector<int>&KnightPos, vector<int>&TargetPos, int N){
+	    // Code here
+	    int reach_x=TargetPos[0],reach_y=TargetPos[1];
+	    queue<pair<int,int>>q;
+	    int x=KnightPos[0],y=KnightPos[1];
+	    bool vis[N+1][N+1];
+	    for(int i=0;i<=N;i++)
+	        for(int j=0;j<=N;j++)
+	            vis[i][j]=false;
+	    vis[x][y]=true;
+	    q.push({x,y});
+	    int timer=0;
+	    while(!q.empty())
+	    {
+	        int count=q.size();
+	        while(count--)
+	        {
+	            int i=q.front().first;
+	            int j=q.front().second;
+	            q.pop();
+	            if(i==reach_x && j==reach_y)
+	                return timer;
+	            if(isValidMove(i+2,j+1,N) && vis[i+2][j+1]==false){
+	                q.push({i+2,j+1});
+	                vis[i+2][j+1]=true;
+	            }
+	                
+	            if(isValidMove(i-2,j+1,N) && vis[i-2][j+1]==false){
+	                q.push({i-2,j+1});
+	                vis[i-2][j+1]=true;
+	            }
+	                
+	            if(isValidMove(i+2,j-1,N) && vis[i+2][j-1]==false){
+	                q.push({i+2,j-1});
+	                vis[i+2][j-1]=true;
+	            }
+	                
+	            if(isValidMove(i-2,j-1,N) && vis[i-2][j-1]==false){
+	                q.push({i-2,j-1});
+	                vis[i-2][j-1]=true;
+	            }
+	                
+	            if(isValidMove(i+1,j+2,N) && vis[i+1][j+2]==false){
+	                q.push({i+1,j+2});
+	                vis[i+1][j+2]=true;
+	            }
+	                
+	            if(isValidMove(i-1,j+2,N) && vis[i-1][j+2]==false){
+	                q.push({i-1,j+2});
+	                vis[i-1][j+2]=true;
+	            }
+	                
+	            if(isValidMove(i+1,j-2,N) && vis[i+1][j-2]==false){
+	                q.push({i+1,j-2});
+	                vis[i+1][j-2]=true;
+	            }
+	                
+	            if(isValidMove(i-1,j-2,N) && vis[i-1][j-2]==false){
+	                q.push({i-1,j-2});
+	                vis[i-1][j-2]=true;
+	            }
+	                
+	        }
+	        timer++;
+	    }
+	    return -1;
+	}
