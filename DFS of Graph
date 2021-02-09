@@ -1,0 +1,21 @@
+https://practice.geeksforgeeks.org/problems/depth-first-traversal-for-a-graph/1/?category[]=Graph&category[]=Graph&page=1&query=category[]Graphpage1category[]Graph
+
+void DFS(vector<int>adj[],int s,bool visited[],vector<int>&v)
+    {
+        visited[s]=true;
+        v.push_back(s);
+        for(int u:adj[s])
+        {
+            if(visited[u]==false)
+                DFS(adj,u,visited,v);
+        }
+    }
+	vector<int>dfsOfGraph(int V, vector<int> adj[]){
+	    // Code here
+	    bool visited[V];
+	    for(int i=0;i<V;i++)
+	        visited[i]=false;
+	    vector<int>v;
+	    DFS(adj,0,visited,v);
+	    return v;
+	}
