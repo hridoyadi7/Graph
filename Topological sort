@@ -1,0 +1,27 @@
+https://practice.geeksforgeeks.org/problems/topological-sort/1/?category[]=Graph&category[]=Graph&page=1&query=category[]Graphpage1category[]Graph
+
+	vector<int> topoSort(int V, vector<int> adj[]) {
+	    // code here
+	    vector<int>v;
+	    int indegree[V]={0};
+	    for(int i=0;i<V;i++)
+	        for(int j=0;j<adj[i].size();j++)
+	            indegree[adj[i][j]]++;
+	    queue<int>q;
+	    for(int i=0;i<V;i++)
+	        if(indegree[i]==0)
+	            q.push(i);
+	    while(!q.empty())
+	    {
+	        int curr=q.front();
+	        q.pop();
+	        v.push_back(curr);
+	        for(int u:adj[curr])
+	        {
+	            indegree[u]--;
+	            if(indegree[u]==0)
+	                q.push(u);
+	        }
+	    }
+	    return v;
+	}
