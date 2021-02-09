@@ -1,0 +1,60 @@
+https://practice.geeksforgeeks.org/problems/269f61832b146dd5e6d89b4ca18cbd2a2654ebbe/1/?category[]=Graph&category[]=Graph&page=1&query=category[]Graphpage1category[]Graph
+
+    bool isValidMove(int i,int j,int m,int n,vector<vector<int>> &hospital)
+    {
+        return (i>=0 && i<m && j>=0 && j<n && hospital[i][j]==1);
+    }
+    int helpaterp(vector<vector<int>> &hospital)
+    {
+        //code here
+        queue<pair<int,int>>q;
+        int m=hospital.size(),n=hospital[0].size();
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(hospital[i][j]==2)
+                {
+                    q.push({i,j});
+                    hospital[i][j]=3;
+                }
+            }
+        }
+        int timer=-1;
+        while(!q.empty())
+        {
+            int count=q.size();
+            while(count--)
+            {
+                int i=q.front().first;
+                int j=q.front().second;
+                q.pop();
+                if(isValidMove(i+1,j,m,n,hospital))
+                {
+                    q.push({i+1,j});
+                    hospital[i+1][j]=3;
+                }
+                if(isValidMove(i-1,j,m,n,hospital))
+                {
+                    q.push({i-1,j});
+                    hospital[i-1][j]=3;
+                }
+                if(isValidMove(i,j+1,m,n,hospital))
+                {
+                    q.push({i,j+1});
+                    hospital[i][j+1]=3;
+                }
+                if(isValidMove(i,j-1,m,n,hospital))
+                {
+                    q.push({i,j-1});
+                    hospital[i][j-1]=3;
+                }
+            }
+            timer++;
+        }
+        for(int i=0;i<m;i++)
+            for(int j=0;j<n;j++)
+                if(hospital[i][j]==1)
+                    return -1;
+        return timer;
+    }
