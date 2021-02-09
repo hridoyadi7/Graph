@@ -1,0 +1,48 @@
+https://practice.geeksforgeeks.org/problems/find-whether-path-exist5238/1/?category[]=Graph&category[]=Graph&page=1&query=category[]Graphpage1category[]Graph
+
+    bool isValidMove(vector<vector<int>>& grid,int i,int j,int n,vector<vector<bool>>&visited)
+    {
+        return (i>=0 && i<n && j>=0 && j<n && (grid[i][j]==3 || grid[i][j]==2));
+    }
+    bool DFSRec(vector<vector<int>>& grid,int i,int j,int n,vector<vector<bool>>&visited)
+    {
+        visited[i][j]=true;
+        // cout<<i<<" "<<j<<endl;
+        if(grid[i][j]==2)
+            return true;
+        if(isValidMove(grid,i+1,j,n,visited) && visited[i+1][j]==false)
+            if(DFSRec(grid,i+1,j,n,visited))
+                return true;
+        if(isValidMove(grid,i-1,j,n,visited) && visited[i-1][j]==false)
+            if(DFSRec(grid,i-1,j,n,visited))
+                return true;
+        if(isValidMove(grid,i,j+1,n,visited) && visited[i][j+1]==false)
+            if(DFSRec(grid,i,j+1,n,visited))
+                return true;
+        if(isValidMove(grid,i,j-1,n,visited) && visited[i][j-1]==false)
+            if(DFSRec(grid,i,j-1,n,visited))
+                return true;
+        return false;
+    }
+    bool is_Possible(vector<vector<int>>& grid) {
+        int n=grid.size();
+        vector<vector<bool>>visited;
+        for(int i=0;i<n;i++){
+            vector<bool>v;
+            for(int j=0;j<n;j++){
+                v.push_back(false);
+            }
+            visited.push_back(v);
+        }
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(grid[i][j]==1)
+                {
+                    return DFSRec(grid,i,j,n,visited);
+                }
+            }
+        }
+        return false;
+    }
