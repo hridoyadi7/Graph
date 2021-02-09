@@ -1,0 +1,33 @@
+   https://practice.geeksforgeeks.org/problems/x-total-shapes3617/1/?category[]=Graph&category[]=Graph&page=1&query=category[]Graphpage1category[]Graph
+   bool validMove(int i,int j,int n,int m,vector<vector<char>>& grid)
+    {
+        return (i>=0 && i<n && j>=0 && j<m && grid[i][j]=='X');
+    }
+    void DFSRec(vector<vector<char>>& grid,int i,int j,int n,int m)
+    {
+        grid[i][j]='V';
+        if(validMove(i+1,j,n,m,grid))
+            DFSRec(grid,i+1,j,n,m);
+        if(validMove(i-1,j,n,m,grid))
+            DFSRec(grid,i-1,j,n,m);
+        if(validMove(i,j+1,n,m,grid))
+            DFSRec(grid,i,j+1,n,m);
+        if(validMove(i,j-1,n,m,grid))
+            DFSRec(grid,i,j-1,n,m);
+        
+    }
+    int xShape(vector<vector<char>>& grid) {
+        // Code here
+        int n=grid.size(),m=grid[0].size(),count=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]=='X')
+                {
+                    count++;
+                    DFSRec(grid,i,j,n,m);
+                }
+            }
+        }
+        return count;
+            
+    }
