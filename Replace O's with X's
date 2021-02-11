@@ -1,0 +1,113 @@
+https://practice.geeksforgeeks.org/problems/replace-os-with-xs/0/?category[]=Graph&category[]=Graph&page=1&query=category[]Graphpage1category[]Graph#
+
+#include<bits/stdc++.h>
+using namespace std;
+bool isValidMove(vector<vector<char>>&adj,int i,int j,int n,int m,vector<vector<bool>>& visited)
+{
+    return (i>=0 && i<n && j>=0 && j<m && visited[i][j]==false && adj[i][j]=='O');
+}
+void BFS(vector<vector<char>>&adj,int n,int m)
+{
+    vector<vector<bool>>visited;
+    queue<pair<int,int>>q;
+    for(int i=0;i<n;i++)
+	{
+	    vector<bool>v;
+	    for(int j=0;j<m;j++)
+	    {
+	        v.push_back(false);
+	    }
+	    visited.push_back(v);
+	}
+	for(int i=0;i<m;i++)
+	{
+	    if(adj[0][i]=='O')
+	    {
+	        q.push({0,i});
+	        visited[0][i]=true;
+	    }
+	    if(adj[n-1][i]=='O')
+	    {
+	        q.push({n-1,i});
+	        visited[n-1][i]=true;
+	    }
+	}
+	for(int i=0;i<n;i++)
+	{
+	    if(adj[i][0]=='O')
+	    {
+	        q.push({i,0});
+	        visited[i][0]=true;
+	    }
+	    if(adj[i][m-1]=='O')
+	    {
+	        q.push({i,m-1});
+	        visited[i][m-1]=true;
+	    }
+	}
+	while(!q.empty())
+	{
+	    int count=q.size();
+	    while(count--)
+	    {
+	        int i=q.front().first;
+	        int j=q.front().second;
+	        q.pop();
+	        if(isValidMove(adj,i+1,j,n,m,visited))
+	        {
+	            q.push({i+1,j});
+	            visited[i+1][j]=true;
+	        }
+	        if(isValidMove(adj,i-1,j,n,m,visited))
+	        {
+	            q.push({i-1,j});
+	            visited[i-1][j]=true;
+	        }
+	        if(isValidMove(adj,i,j+1,n,m,visited))
+	        {
+	            q.push({i,j+1});
+	            visited[i][j+1]=true;
+	        }
+	        if(isValidMove(adj,i,j-1,n,m,visited))
+	        {
+	            q.push({i,j-1});
+	            visited[i][j-1]=true;
+	        }
+	    }
+	}
+	for(int i=0;i<n;i++)
+	    for(int j=0;j<m;j++)
+	        if(visited[i][j]==false)
+	            adj[i][j]='X';
+}
+int main()
+ {
+	//code
+	int t;
+	cin>>t;
+	while(t--)
+	{
+	    int n,m;
+	    cin>>n>>m;
+	    vector<vector<char>>adj;
+	    for(int i=0;i<n;i++)
+	    {
+	        vector<char>v;
+	        for(int j=0;j<m;j++)
+	        {
+	            char a;
+	            cin>>a;
+	            v.push_back(a);
+	        }
+	        adj.push_back(v);
+	    }
+	    BFS(adj,n,m);
+	    for(int i=0;i<n;i++){
+	        for(int j=0;j<m;j++){
+	            cout<<adj[i][j]<<" ";
+	        }
+	    }
+	    cout<<endl;
+	}
+	return 0;
+}
