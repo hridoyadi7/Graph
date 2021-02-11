@@ -1,0 +1,41 @@
+    bool isCyclic(vector<int>adj[],int s,bool visited[],int count,unordered_map<int,int>&mp)
+    {
+        visited[s]=true;
+        mp[s]=count;
+        // cout<<s<<" "<<mp[s]<<endl;
+        for(int u:adj[s])
+        {
+            if(visited[u]==false)
+            {
+                if(isCyclic(adj,u,visited,count+1,mp)){
+                    // cout<<"+"<<endl;
+                    return true;
+                }
+            }
+            else
+            {
+                if((abs(mp[s]-mp[u]))%2==0){
+                    // cout<<"-"<<endl;
+                    return true;
+                }
+            }
+        }
+        // cout<<"*"<<endl;
+        return false;
+       
+    }
+	bool isBipartite(int V, vector<int>adj[]){
+	    // Code here
+	    bool visited[V];
+	    unordered_map<int,int>mp;
+	    for(int i=0;i<V;i++)
+	        visited[i]=false;
+	    for(int i=0;i<V;i++){
+	        int res=0;
+	        if(visited[i]==false){
+	            if(isCyclic(adj,i,visited,0,mp))
+	                return false;
+	        }
+	    }
+	    return true;
+	}
