@@ -1,0 +1,91 @@
+https://practice.geeksforgeeks.org/problems/word-boggle4143/1/?category[]=Graph&category[]=Graph&page=2&query=category[]Graphpage2category[]Graph#
+
+    bool isValidMove(int i,int j,int r,int c,string str,int count,vector<vector<char> >& board)
+    {
+        return (i>=0 && i<r && j>=0 && j<c && str[count]==board[i][j]);
+    }
+    bool dfs(vector<vector<char> >& board,string str,int count,int i,int j,int r,int c)
+    {
+        if(count==str.length()){
+            // board[i][j]='$';
+            return true;
+        }
+        char ch=board[i][j];
+        board[i][j]='+';
+        if(isValidMove(i+1,j,r,c,str,count,board) && dfs(board,str,count+1,i+1,j,r,c))
+        {
+            board[i][j]=ch;
+            return true;
+        }
+        if(isValidMove(i-1,j,r,c,str,count,board) && dfs(board,str,count+1,i-1,j,r,c))
+        {
+            board[i][j]=ch;
+            return true;
+        }
+        if(isValidMove(i,j+1,r,c,str,count,board) && dfs(board,str,count+1,i,j+1,r,c))
+        {
+            board[i][j]=ch;
+            return true;
+        }
+        if(isValidMove(i,j-1,r,c,str,count,board) && dfs(board,str,count+1,i,j-1,r,c))
+        {
+            board[i][j]=ch; 
+            return true;
+        }
+        if(isValidMove(i+1,j+1,r,c,str,count,board) && dfs(board,str,count+1,i+1,j+1,r,c))
+        {
+            board[i][j]=ch;
+            return true;
+        }
+        if(isValidMove(i+1,j-1,r,c,str,count,board) && dfs(board,str,count+1,i+1,j-1,r,c))
+        {
+            board[i][j]=ch;
+            return true;
+        }
+        if(isValidMove(i-1,j+1,r,c,str,count,board) && dfs(board,str,count+1,i-1,j+1,r,c))
+        {
+            board[i][j]=ch;
+            return true;
+        }
+        if(isValidMove(i-1,j-1,r,c,str,count,board) && dfs(board,str,count+1,i-1,j-1,r,c))
+        {
+            board[i][j]=ch;
+            return true;
+        }
+        board[i][j]=ch;
+        return false;
+    }
+	vector<string> wordBoggle(vector<vector<char> >& board, vector<string>& dictionary) {
+	    // Code here
+	    int n=dictionary.size();
+	    sort(dictionary.begin(),dictionary.end());
+	    reverse(dictionary.begin(),dictionary.end());
+	    vector<string>v;
+	    int r=board.size(),c=board[0].size();
+	    for(int i=0;i<n;i++)
+	    {
+	        string str=dictionary[i];
+	        int flag=0;
+	        for(int j=0;j<r;j++)
+	        {
+	            
+	            for(int k=0;k<c;k++)
+	            {
+	                if(board[j][k]==str[0]){
+	                    bool res=dfs(board,str,1,j,k,r,c);
+	                    if(res==true){
+	                        v.push_back(str);
+	                        flag=1;
+	                    }
+	                    if(flag==1)
+	                        break;
+	                }
+	                if(flag==1)
+	                    break;
+	            }
+	            if(flag==1)
+	                break;
+	        }
+	    }
+	    return v;
+	}
