@@ -1,0 +1,68 @@
+https://practice.geeksforgeeks.org/problems/flood-fill-algorithm1856/1/?category[]=Graph&category[]=Graph&page=2&query=category[]Graphpage2category[]Graph
+
+DFS Based Solution:
+    void dfs(vector<vector<int>>& image,int n,int m,int sr,int sc,int oldColor,int newColor){
+        if(sr<0 ||sr>=n || sc<0 || sc>=m ||image[sr][sc]!=oldColor)
+            return ;
+        if(image[sr][sc]==newColor)
+            return ;
+        image[sr][sc]=newColor;
+        dfs(image,n,m,sr+1,sc,oldColor,newColor);
+        dfs(image,n,m,sr-1,sc,oldColor,newColor);
+        dfs(image,n,m,sr,sc+1,oldColor,newColor);
+        dfs(image,n,m,sr,sc-1,oldColor,newColor);
+        
+    }
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
+        // Code here 
+      
+        int n=image.size(),m=image[0].size();
+        int oldColor=image[sr][sc];
+        dfs(image,n,m,sr,sc,oldColor,newColor);
+        return image;
+    }
+    
+  BFS based solution:
+      bool isValidMove(vector<vector<int>>& image,int i,int j,int n,int m,int oldColor)
+    {
+        return (i>=0 && i<n && j>=0 && j<m && image[i][j]==oldColor);
+    }
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
+        // Code here 
+        queue<pair<int,int>>q;
+        int n=image.size(),m=image[0].size();
+        q.push({sr,sc});
+        int oldColor=image[sr][sc];
+        image[sr][sc]=newColor;
+        while(!q.empty())
+        {
+            int count=q.size();
+            while(count--)
+            {
+                int i=q.front().first;
+                int j=q.front().second;
+                q.pop();
+                if(isValidMove(image,i+1,j,n,m,oldColor))
+                {
+                    q.push({i+1,j});
+                    image[i+1][j]=newColor;
+                }
+                if(isValidMove(image,i-1,j,n,m,oldColor))
+                {
+                    q.push({i-1,j});
+                    image[i-1][j]=newColor;
+                }
+                if(isValidMove(image,i,j+1,n,m,oldColor))
+                {
+                    q.push({i,j+1});
+                    image[i][j+1]=newColor;
+                }
+                if(isValidMove(image,i,j-1,n,m,oldColor))
+                {
+                    q.push({i,j-1});
+                    image[i][j-1]=newColor;
+                }
+            }
+        }
+        return image;
+    }
