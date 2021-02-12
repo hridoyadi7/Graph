@@ -1,0 +1,68 @@
+https://practice.geeksforgeeks.org/problems/hamiltonian-path/0/?category[]=Graph&category[]=Graph&page=1&query=category[]Graphpage1category[]Graph
+
+#include<bits/stdc++.h>
+using namespace std;
+
+bool HPR(vector<vector<int>>&adj,int i,bool visited[],stack<int>&st,int n)
+{
+    st.push(i);
+    if(st.size()==n)
+        return true;
+    visited[i]=true;
+    for(int u:adj[i])
+    {
+        // cout<<u+1<<endl;
+        if(visited[u]==false)
+        {
+            if(HPR(adj,u,visited,st,n))
+                return true;
+        }
+    }
+    visited[i]=false;
+    // cout<<"*****"<<st.top()+1<<endl;
+    st.pop();
+    return false;
+    
+}
+
+bool HamiltonianPath(vector<vector<int>>&adj,int n)
+{
+    bool visited[n];
+    for(int i=0;i<n;i++)
+        visited[i]=false;
+    stack<int>st;
+    for(int i=0;i<n;i++)
+        if(visited[i]==false)
+            if(HPR(adj,i,visited,st,n)==true)
+                return true;
+    return false;
+}
+int main()
+ {
+	//code
+	int t;
+	cin>>t;
+	while(t--)
+	{
+	    int n,e;
+	    cin>>n>>e;
+	    vector<vector<int>>adj;
+	    for(int i=0;i<n;i++)
+	    {
+	        vector<int>v;
+	        adj.push_back(v);
+	    }
+	    for(int i=0;i<e;i++)
+	    {
+	        int a,b;
+	        cin>>a>>b;
+	        a--;
+	        b--;
+	        adj[a].push_back(b);
+	        adj[b].push_back(a);
+	    }
+	    bool res=HamiltonianPath(adj,n);
+	    cout<<res<<endl;
+	}
+	return 0;
+}
